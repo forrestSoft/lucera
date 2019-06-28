@@ -1,40 +1,44 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
-const Datastore = require('nedb')
 
-const csvFilePath = "./adata.csv"
-// const csvToJson = require('convert-csv-to-json');
-// let data = csvToJson.getJsonFromCsv("./adata.csv")
 
-const csvToJson=require('csvtojson')
-let db = new Datastore();
-
-let data
-let csv = csvToJson()
-.fromFile(csvFilePath)
-.then((jsonObj)=>{
-    data = jsonObj.slice(0,3)
-    fill(data)
-
-})
-
-fill = (data) => {
-	db.insert(data, (newDocs)=>{
-		begin()
-	})
-}
+const db = require('./server/db.js')
 
 begin = () => {
-	// console.log that your server is up and running
 	app.listen(port, () => console.log(`Listening on port ${port}`));
-	db.find({"lp": 'LP1'} , (error, newDocs)=>{
-			console.log(newDocs)
-		})
 }
 
+const valid = [
+	'sym',
+	'ts',
+	'lp',
+	'bid_price',
+	'bid_quantity',
+	'ask_price',
+	'ask_quantity'
+]
 
-// create a GET route
-app.get('/express_backend', (req, res) => {
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+app.get('/query', (req, res) => {
+	// filter out invalid params
+	let actual = {}
+	for (param in req.query){
+		if(valid.includes(param)){
+			actual[param] =  req.query[param]
+		}
+	}
+
+	let count = req.query.count || 10
+	let start = req.query.start || 0
+
+	// execute a search with the valid params that were sent
+	db.find({...actual} , (error, newDocs)=>{
+		console.log(newDocs)
+		res.send({
+			total: newDocs.length,
+			length: count,
+			data: newDocs.slice(start,count)
+		})
+	})
+  
 });
