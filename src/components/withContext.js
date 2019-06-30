@@ -2,10 +2,25 @@ import React, {useReducer} from 'react'
 
 import DispatchContext, {MetaContext} from 'context'
 
+const sort = (data, key) =>{
+	return data.sort((a,b)=>{
+    if(a[key]>b[key]){
+      return 1
+    }else if (a[key]<b[key]){
+      return -1
+    }else{
+      return 0
+    }
+  })
+}				
+
 const dispatch = (state, action) => {
 	switch(action.action){
 		case 'DATA_LOADED':
-			return {...action.payload, LOADING:false}
+			return {...state, ...action.payload, LOADING:false}
+		break;
+		case 'SORT':
+			return {...state, data: sort(state.data, action.payload)}
 		break;
 		default:
 			return state

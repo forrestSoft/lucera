@@ -21,9 +21,12 @@ const Root = (props) => {
   }, [])
 
   useEffect(()=>{
-  	fetch(`${outGoingURL}?sym=${meta.selectedSymbol}`)
+    if(!meta.selectedSymbol){return}
+      
+  	fetch(`${outGoingURL}?sym=${meta.selectedSymbol}&count=100`)
       .then(response=>response.json())
       .then((response)=>{
+
         gridsDispatch({
           action: 'DATA_LOADED',
           payload: response

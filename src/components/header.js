@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, memo} from 'react'
 import {MetaContext} from 'context'
 
 const Header = (props) => {
@@ -7,7 +7,7 @@ const Header = (props) => {
   return (
     <table>
     	<tbody>
-    		{meta.Loading===false &&
+    		{meta.LOADING===false &&
     		<tr>{HeaderItems(meta.headerKeys)}</tr>
     		}
     	</tbody>
@@ -15,7 +15,7 @@ const Header = (props) => {
   )
 }
 
-export default Header;
+export default memo(Header)
 
 const HeaderItems = headers => {
 	return headers.map((header, i)=>{
