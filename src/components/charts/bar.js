@@ -1,10 +1,10 @@
 
 import React, {useContext} from 'react';
-import DispatchContext, {MetaContext} from 'context'
+import useGridContext from '../contexts/grid'
 import * as V from 'victory'
 
 const Bar = () => {
-	const [grid, gridsDispatch] = useContext(DispatchContext)
+	const [grid, gridsDispatch] = useGridContext()
 	return(
 		<V.VictoryChart >
 	    <V.VictoryBar 

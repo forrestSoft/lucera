@@ -36,33 +36,19 @@ const DataGrid = props => {
     key: 'sym',
   },
 ];
-
   	
-  return (
-  	<Fragment>
-	  		<Table 
-	  			dataSource={grid.data}
-	  			columns={columns} 
-	  			loading={!grid.LOADING===false} 
-	  			rowKey={record => record._id}
-	  		/>
-
-	  		</Fragment>
-	  		)
-  /*	<Fragment>
-  		
-	  		<Fragment>
-	  		<Table 
-	  			dataSource={grid.data}
-	  			columns={columns} 
-	  			loading={!grid.LOADING===false} 
-	  			rowKey={record => record._id}
-	  		/>
-		    
-		    <Line />
-				<Bar /></Fragment>
-    </Fragment>
-  )*/
+	return (
+		<Fragment>
+  		<Table 
+  			dataSource={grid.data}
+  			columns={columns} 
+  			rowKey={record => record._id}
+  		/>
+			<Line />
+			<Bar />
+		</Fragment>
+	)
+  
 }
 
 export default DataGrid;

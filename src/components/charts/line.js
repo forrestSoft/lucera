@@ -1,9 +1,9 @@
 import React, {useContext, Fragment, memo} from 'react';
-import DispatchContext from 'context'
+import useGridContext from '../contexts/grid'
 import * as V from 'victory'
 
 const Line = ()=>{
-  const [grid, gridsDispatch] = useContext(DispatchContext)
+  const [grid, gridsDispatch] = useGridContext()
   // debugger
   return(
     <Fragment>
