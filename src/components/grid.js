@@ -8,7 +8,6 @@ const Grid = props => {
   return(
 	 	<Fragment>
 	 		<Controls />
-	 		{/*<Header />*/}
     	<DataGrid />
 	 	</Fragment> 
   )

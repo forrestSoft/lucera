@@ -1,40 +1,37 @@
-import React, {useEffect, useContext } from 'react'
+import React, {useEffect, useCallback} from 'react'
 
-import DispatchContext, {MetaContext} from 'context'
-
+import useGridContext from './contexts/grid'
+import useMetaContext from './contexts/meta'
+import useFetch from 'hooks/useFetch'
 import Grid from 'grid'
+
 
 const outGoingURL = 'http://localhost:3000/query'
 const Root = (props) => {
-	const [grid, gridsDispatch] = useContext(DispatchContext)
-	const [meta, metaDispatch] = useContext(MetaContext)
+	const [grid, gridDispatch] = useGridContext()
+	const [meta, metaDispatch] = useMetaContext()
 
-  useEffect(()=>{
-		fetch('http://localhost:3000/meta')
-      .then(response=>response.json())
-      .then((response)=>{
-        metaDispatch({
-          action: 'META_LOADED',
-          payload: response
-        })
-    	})
-  }, [])
+  const metaURL = 'http://localhost:3000/meta'
+  const metaLoaded = useCallback((payload)=>{
+    metaDispatch({
+      action: 'META_LOADED',
+      payload: payload
+    })
+  }, [metaDispatch])
+  const [metaData, metaLoading, metaError] = useFetch(metaURL, metaLoaded)
 
-  useEffect(()=>{
-    if(!meta.selectedSymbol){return}
-      
-  	fetch(`${outGoingURL}?sym=${meta.selectedSymbol}&count=100`)
-      .then(response=>response.json())
-      .then((response)=>{
-
-        gridsDispatch({
-          action: 'DATA_LOADED',
-          payload: response
-        })
-    	})
-  }, [meta.selectedSymbol])
-
-  return <Grid />
+  const gridURL = `${outGoingURL}?sym=${meta.selectedSymbol}&count=10`
+  const gridLoaded = useCallback((payload)=>{
+    gridDispatch({
+      action: 'DATA_LOADED',
+      payload: payload
+    })
+  }, [gridDispatch])
+  const [data, dataLoading, dataError] = useFetch(gridURL, gridLoaded)
+  
+  return ( 
+      <Grid />
+  )
 }
 
 export default Root

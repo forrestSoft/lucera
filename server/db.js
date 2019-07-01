@@ -12,20 +12,21 @@ csvToJson()
 
 // TODO - this is a stupid way to get the data
 fill = (data) => {
-	let symbols = {}
+	let symbols = new Set()
 	db.insert(data, (err, newDocs)=>{
 		// walk over every row to build array of unique
 		// symbols
 		let s = newDocs.forEach((doc,i)=>{
-			if(!symbols[doc.sym]){
-				symbols[doc.sym] = true
-			}
+			// if(!symbols[doc.sym]){
+			// 	symbols[doc.sym] = true
+			// }
+			symbols.add(doc.sym)
 		})
 
 		// send along column headers and unique symbols
 		begin({
 			headerKeys: Object.keys(newDocs[0]),
-			symbolList: symbols
+			symbolList: Array.from(symbols)
 		})
 	})
 }

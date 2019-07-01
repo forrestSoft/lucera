@@ -7,9 +7,9 @@ const Header = (props) => {
   return (
     <table>
     	<tbody>
-    		{meta.LOADING===false &&
+
     		<tr>{HeaderItems(meta.headerKeys)}</tr>
-    		}
+    		
     	</tbody>
     </table>
   )

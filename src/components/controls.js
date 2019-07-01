@@ -1,11 +1,11 @@
-import React, {useContext, useCallback} from 'react';
-import {MetaContext} from 'context'
+import React, {useCallback} from 'react';
+import useMetaContext from './contexts/meta'
 
 const Controls = props => {
-	const [meta, metaDispatch] = useContext(MetaContext)
+	// const [meta, metaDispatch] = useContext(MetaContext)
   return (
     <div>
-	    {meta.LOADING === false && <SymbolSelect />}
+	    <SymbolSelect />
     </div>
   )
 }
@@ -13,7 +13,7 @@ const Controls = props => {
 export default Controls
 
 const SymbolSelect = props => {
-	const [meta, metaDispatch] = useContext(MetaContext)
+	const [meta, metaDispatch] = useMetaContext()
 
 	const handleChange = useCallback((e)=>{
 		metaDispatch({
@@ -25,10 +25,10 @@ const SymbolSelect = props => {
 	return (
 		<select 
     	onChange={handleChange}
-    	value={meta.selectedSymbol}
+    	value={meta.selectedSymbol || ''}
     >
     	{
-	    	Object.keys(meta.symbolList).map((symbol, i)=>{
+	    	meta.symbolList && meta.symbolList.map((symbol, i)=>{
 	    		return(
 	    			<option value={symbol} key={symbol}>
     					{symbol}

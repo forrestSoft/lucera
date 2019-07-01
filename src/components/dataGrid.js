@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, Fragment, memo} from 'react';
-import DispatchContext, {MetaContext} from 'context'
+import useGridContext from './contexts/grid'
+import useMetaContext from './contexts/meta'
 
 import Table from 'antd/es/table';
 import "antd/es/table/style/css"
@@ -7,16 +8,10 @@ import * as V from 'victory'
 
 import Bar from 'charts/bar'
 import Line from 'charts/line'
-const data = [
-  {quarter: 1, earnings: 13000},
-  {quarter: 2, earnings: 16500},
-  {quarter: 3, earnings: 14250},
-  {quarter: 4, earnings: 19000}
-];
 
 const DataGrid = props => {
-	const [grid, gridsDispatch] = useContext(DispatchContext)
-	const [meta, metaDispatch] = useContext(MetaContext)
+	const [grid, gridsDispatch] = useGridContext()
+	const [meta, metaDispatch] = useMetaContext()
 
 	const sort = (e)=>{
 		gridsDispatch({
@@ -42,47 +37,36 @@ const DataGrid = props => {
   },
 ];
 
-
+  	
   return (
   	<Fragment>
-  		<Table 
-  			dataSource={grid.data}
-  			columns={columns} 
-  			loading={!grid.LOADING===false} 
-  			rowKey={record => record._id}
-  		/>
-	    <table style={{display: 'none'}}>
-	    	<tbody>
-	    		<tr>
-	    		{ meta.LOADING===false && meta.headerKeys.map((header, i)=>{
-						return (<th key={`${header}`} onClick={sort}>{header}</th>)	
-					})}
-					</tr>
+	  		<Table 
+	  			dataSource={grid.data}
+	  			columns={columns} 
+	  			loading={!grid.LOADING===false} 
+	  			rowKey={record => record._id}
+	  		/>
 
-		    	{grid.LOADING===false &&
-			    	<Rows data={grid.data} />
-		    	}
-	    	</tbody>
-	    </table>
-	    
-	    <Line />
-			<Bar />
+	  		</Fragment>
+	  		)
+  /*	<Fragment>
+  		
+	  		<Fragment>
+	  		<Table 
+	  			dataSource={grid.data}
+	  			columns={columns} 
+	  			loading={!grid.LOADING===false} 
+	  			rowKey={record => record._id}
+	  		/>
+		    
+		    <Line />
+				<Bar /></Fragment>
     </Fragment>
-  )
+  )*/
 }
 
 export default DataGrid;
 
-/*
-response.data = response.data.sort((a,b)=>{
-          if(a.ask_price>b.ask_price){
-            return 1
-          }else if (a.ask_price<b.ask_price){
-            return -1
-          }else{
-            return 0
-          }
-        })*/
 // TR
 const Rows = (props) => {
   return (
