@@ -1,11 +1,11 @@
 import React, {useReducer, createContext, useContext} from 'react'
 
-const GridContext = createContext()
+const GridContext = createContext({loading: true})
 
 const gridDispatch = (state, action) => {
 	switch(action.action){
 		case 'DATA_LOADED':
-			return {...state, ...action.payload, LOADING:false}
+			return {...state, ...action.payload, loading:false}
 		break;
 		// case 'SORT':
 		// 	return {...state, data: sort(state.data, action.payload)}

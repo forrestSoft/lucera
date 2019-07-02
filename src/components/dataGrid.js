@@ -38,15 +38,15 @@ const DataGrid = props => {
 ];
   	
 	return (
-		<Fragment>
+		
   		<Table 
   			dataSource={grid.data}
   			columns={columns} 
   			rowKey={record => record._id}
+        style={{minHeight: '100vh'}}
   		/>
-			<Line />
-			<Bar />
-		</Fragment>
+			
+		
 	)
   
 }

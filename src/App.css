@@ -1,12 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
 
 .App-header {
   background-color: #282c34;
@@ -19,15 +10,20 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.invert{
+  filter: invert(100%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ant-empty.ant-empty-normal,
+.ant-table-placeholder,
+.ant-spin-nested-loading{
+  min-height: 100%;
+}
+
+.ant-divider.ant-divider-horizontal{
+  margin: 4px 0 20px 0;
+}
+
+.ant-menu-item h3{
+  margin-bottom:  0;
 }

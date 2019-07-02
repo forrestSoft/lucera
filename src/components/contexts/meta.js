@@ -1,13 +1,13 @@
 import React, {useReducer, createContext, useContext} from 'react'
 
-const MetaContext = createContext()
+const MetaContext = createContext({loading: true})
 
 const metaDispatch = (state, action) => {
 	switch(action.action){
 		case 'META_LOADED':
 			return {
 				...action.payload,
-				LOADING:false,
+				loading: false,
 				selectedSymbol: (action.payload &&action.payload.symbolList && action.payload.symbolList[0]) || null
 			}
 		break;
