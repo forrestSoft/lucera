@@ -12,10 +12,8 @@ const outGoingURL = 'http://localhost:3000/query'
 const Root = (props) => {
 	const [grid, gridDispatch] = useGridContext()
 	const [meta, metaDispatch] = useMetaContext()
-  // debugger
+  
   const metaURL = 'http://localhost:3000/meta'
-
-  // let data, dataLoading, dataError, metaData, metaLoading, metaError
   const metaLoaded = useCallback((payload)=>{
     metaDispatch({
       action: 'META_LOADED',
@@ -24,12 +22,31 @@ const Root = (props) => {
   }, [metaDispatch])
   const [metaData, metaLoading, metaError] = useFetch(metaURL, metaLoaded)
 
-  const gridURL = `${outGoingURL}?sym=${meta.selectedSymbol}&count=10`
-  const gridLoaded = useCallback((payload)=>{
+  const buildURL = ()=>{
+      console.log(grid.filters, !grid.filters)
+    if(!grid.filter){
+      return outGoingURL
+    }
+
+      
+    let filters = ''
+    Object.keys(grid.filter).map((filter, i)=>{
+      
+      filters += `${filter}=${grid.filter[filter].join(',')}`
+    })
     
-  }, [gridDispatch])
-  const [data, dataLoading, dataError] = useFetch(gridURL, gridLoaded)
-  // console.log(grid, !grid.loading , !dataLoading , !meta.loading , metaLoading)
+    return `${outGoingURL}?${filters}`
+    
+  }
+  const gridURL = buildURL()
+  const gridLoaded = useCallback((payload)=>{
+    gridDispatch({
+      action: 'DATA_LOADED',
+      payload: payload
+    })
+  }, [grid.filter, gridDispatch])
+  const [data, dataLoading, dataError] = useFetch(buildURL(), gridLoaded)
+  
   return ( 
     <Fragment>
       <Grid />

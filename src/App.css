@@ -27,3 +27,10 @@
 .ant-menu-item h3{
   margin-bottom:  0;
 }
+.ant-collapse{
+  margin: 0 -18px;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

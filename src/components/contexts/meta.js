@@ -1,6 +1,6 @@
 import React, {useReducer, createContext, useContext} from 'react'
 
-const MetaContext = createContext({loading: true})
+const MetaContext = createContext({loading: true, headerKeys: []})
 
 const metaDispatch = (state, action) => {
 	switch(action.action){

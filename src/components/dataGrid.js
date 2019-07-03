@@ -19,36 +19,31 @@ const DataGrid = props => {
 			payload: e.target.textContent
 		})
 	}
-	
- const columns = [{
-    title: 'bid_price',
-    dataIndex: 'bid_price',
-    key: 'bid_price',
-  },
-  {
-    title: 'ask_price',
-    dataIndex: 'ask_price',
-    key: 'ask_price',
-  },
-  {
-    title: 'sym',
-    dataIndex: 'sym',
-    key: 'sym',
-  },
-];
-  	
+	const columns = ()=>{
+    if(!meta.headerKeys){
+      return []
+    }
+   
+    return meta.headerKeys.map((header, i)=>{
+      return {
+        title: header,
+        dataIndex: header,
+        key: header,
+      }
+    })
+  }
+
 	return (
-		
+		<Fragment>
   		<Table 
   			dataSource={grid.data}
-  			columns={columns} 
+  			columns={columns()} 
   			rowKey={record => record._id}
         style={{minHeight: '100vh'}}
   		/>
 			
-		
+		</Fragment>
 	)
-  
 }
 
 export default DataGrid;
