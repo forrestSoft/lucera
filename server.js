@@ -42,18 +42,17 @@ app.get('/meta', (req, res)=>{
 app.get('/query', (req, res) => {
 	// filter out invalid params
 	let actual = {}
+	let q = []
 	for (param in req.query){
 		if(valid.includes(param)){
 			let qValues = req.query[param].split(',').map((l,i)=>{
-					return {[param]: l}	
+				q.push({[param]: l})
+					return l	
 				})
-			actual[param] =  {$or : qValues}
-				
+			actual[param] =  qValues
 		}	
 	}
 	
-	actual['sym'] = actual['sym'] || 'EUR/AUD'
-	console.log('l',actual, Object.keys(actual).length)
 	if(!Object.keys(actual).length){
 		res.send({
 			headerKeys: keys,
@@ -65,19 +64,21 @@ app.get('/query', (req, res) => {
 	let count = req.query.count || 10
 	let start = req.query.start || 0
 	
-	let k = Object.keys(actual.sym)[0]
-	
-	//actual['sym'][k], (e,d)=>{console.log(d)})
-
-	
-	// execute a search with the valid params that were sent
-	db.find(actual.sym , (error, newDocs)=>{
-		res.send({
-			total: newDocs.length,
-			length: count,
-			data: newDocs.slice(start,count),
-			headerKeys: keys,
-			symbolList: symbols,
+	db.find({
+		$where: function (){
+			let matches = Object.keys(actual).some((param, i)=>{
+				return actual[param].includes(this[param])
+			})
+			
+			return matches
+		}},
+		(err, docs)=>{
+			res.send({
+				total: docs.length,
+				length: count,
+				data: docs,//.slice(start,count),
+				headerKeys: keys,
+				symbolList: symbols,
+			})
 		})
-	})
 });

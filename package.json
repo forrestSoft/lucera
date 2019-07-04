@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "server": "node server.js",
-    "server-i": "node --inspect server.js",
+    "server-i": "nodemon --inspect server.js",
     "both": "run-p server start",
     "both-i": "run-p server-i start",
     "build": "react-scripts build",
@@ -31,6 +31,7 @@
     "production": [
       ">0.2%",
       "not dead",
+
       "not op_mini all"
     ],
     "development": [
