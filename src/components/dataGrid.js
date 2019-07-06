@@ -33,13 +33,19 @@ const DataGrid = props => {
       return []
     }
    
-    return meta.headerKeys.map((header, i)=>{
+     let c = meta.headerKeys.map((header, i)=>{
+      if(header === '_id'){
+      		return
+      	}
       return {
         title: toTitleCase(header.replace('_', ' ')),
         dataIndex: header,
         key: header,
+        width:'18%'
       }
     })
+    c.pop()
+    return c
   }
 
 	const handleTableChange=(pagination, filters, sorter)=>{
@@ -57,13 +63,13 @@ const DataGrid = props => {
 		})
 	}
 	return (
-		
 		<Layout>
-		<Content style={{height: '66vh', overflow: 'scroll'}}>
+		<Content style={{height: '66vh'}}>
   		<Table 
   			dataSource={grid.data}
   			columns={columns()} 
   			rowKey={record => record._id}
+  			loading={grid.loading}
         pagination={{
         	...grid.pagination,
         	total: grid.total,
@@ -78,8 +84,10 @@ const DataGrid = props => {
         		handleShowSizeChange(current, page)
         	}
         }}
+        size="small"
+        scroll={{ y: '44vh' }}
         onChange = {handleTableChange}
-        scroll={{ y: 240 }}
+        
   		/>
   		</Content>
   		<Content className={'flex'}>

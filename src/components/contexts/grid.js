@@ -40,6 +40,15 @@ const useGridDispatch = (state, action) => {
 				}
 			}
 		break;
+		case 'LP_PRICE_CHANGE':
+			return {
+				...state,
+				filter: {
+					...state.filter, 
+					lp:action.payload
+				}
+			}
+		break;
 		case 'ASK_PRICE_CHANGE':
 			return {
 				...state,

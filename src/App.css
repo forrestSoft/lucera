@@ -14,12 +14,12 @@
   filter: invert(100%);
 }
 
-.ant-empty.ant-empty-normal,
+/*.ant-empty.ant-empty-normal,
 .ant-table-placeholder,
 .ant-spin-nested-loading{
   min-height: 100%;
 }
-
+*/
 .ant-divider.ant-divider-horizontal{
   margin: 4px 0 20px 0;
 }
@@ -45,4 +45,6 @@
   justify-content: center;
   align-items: center;
   height: 33vh;
+  background:white;
+  padding-top:30px;
 }

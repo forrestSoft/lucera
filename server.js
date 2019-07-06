@@ -65,7 +65,7 @@ app.get('/query', (req, res) => {
 		return
 	}
 
-	let pageSize = req.query.pageSize || 10
+	let pageSize = parseInt(req.query.pageSize || 10)
 	let page = req.query.current || 1
 	let start = (page || 1)*pageSize-pageSize
 	actual.sym = !actual.sym[0].length ?  symbols : actual.sym
@@ -79,10 +79,10 @@ app.get('/query', (req, res) => {
 					break;
 					case 'ask_price':
 					case 'bid_price':
-					console.log(actual[param] < this[param])
 						return actual[param] < this[param]
 					default:
 						return true
+					break;
 				}
 			})
 			

@@ -8,6 +8,10 @@ const Line = ()=>{
   return(
     <div>
       <V.VictoryChart height={250} width={400}>
+        <V.VictoryLabel 
+          text={"Ask and Bid Price over time"}
+          dy={30}
+          dx={125}/>
         <V.VictoryLine 
           data={grid.data}
           x="ts"
@@ -44,7 +48,7 @@ const Line = ()=>{
         <V.VictoryAxis
           tickCount={10}
           dependentAxis
-          label="USD"
+          label=""
           style={{
             tickLabels: {
               fontSize: "5px"

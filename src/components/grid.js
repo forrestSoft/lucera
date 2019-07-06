@@ -25,9 +25,7 @@ const Grid = props => {
 		      	<img src={Logo} className="invert" />
 						<Controls />
 	      </Sider>
-      
-	      	<DataGrid />
-	      
+      	<DataGrid />
 	  </Layout>
   )
 }

@@ -62,13 +62,13 @@ const Controls = props => {
 				  	defaultValue={3} 
 				  	onChange={(vals)=>{
 				    	gridDispatch({
-								action: 'SYMBOL_OPTION_CHANGE',
+								action: 'LP_OPTION_CHANGE',
 								payload: vals
 							})
 				    }}
 			    />
 		    </Form.Item>
-		    <Form.Item label="Bid Price">
+		    {/*<Form.Item label="Bid Price">
 				  <InputNumber 
 				  	min={1} 
 				  	max={10} 
@@ -93,7 +93,7 @@ const Controls = props => {
 							})
 				    }}
 			    />
-		    </Form.Item>
+		    </Form.Item>*/}
 	    </Form>
     </Fragment>
   )

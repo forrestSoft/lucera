@@ -4,26 +4,22 @@ const Datastore = require('nedb')
 
 let db = new Datastore();
 
+let symbols = new Set()
+let lps = new Set()
 csvToJson()
 	.fromFile(csvFilePath)
+	.subscribe((jsonObj,index)=>{
+		// 2018-12-06T 13:00:00.119Z
+    // jsonObj.ts = /\d{2}:\d{2}:\d{2}\.\d{3}/.exec(jsonObj.ts)[0]
+		console.log(index, jsonObj)
+    symbols.add(jsonObj.sym)
+	})
 	.then((jsonObj)=>{
 	    fill(jsonObj)
 	})
 
-// TODO - this is a stupid way to get the data
 fill = (data) => {
-	let symbols = new Set()
 	db.insert(data, (err, newDocs)=>{
-		// walk over every row to build array of unique
-		// symbols
-		let s = newDocs.forEach((doc,i)=>{
-			// db.update({ _id: doc._id }, { $set: { ts: new Date(doc.ts).getMonth() } }, 
-			// 	{ multi: true },
-			// 	function (err, numReplaced) {})
-
-			symbols.add(doc.sym)
-		})
-
 		// send along column headers and unique symbols
 		begin({
 			headerKeys: Object.keys(newDocs[0]),
