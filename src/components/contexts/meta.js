@@ -1,6 +1,7 @@
 import React, {useReducer, createContext, useContext} from 'react'
 
-const MetaContext = createContext({loading: true, headerKeys: []})
+const MetaDataContext = createContext({loading: true, headerKeys: []})
+const MetaDispatchContext = createContext({loading: true, headerKeys: []})
 
 const metaDispatch = (state, action) => {
 	switch(action.action){
@@ -22,17 +23,25 @@ const metaDispatch = (state, action) => {
 	}
 }
 export default () => {
-  return useContext(MetaContext)
+  return [useContext(MetaDataContext), useContext(MetaDispatchContext)]
+}
+
+export const useMetaDataContext = () =>{
+	return useContext(MetaDataContext)
+}
+			 // useMetaDispatchContext
+export const useMetaDispatchContext = () =>{
+	return useContext(MetaDispatchContext)
 }
 
 export const MetaProvider = props => {
 	const [state, dispatch] = useReducer(metaDispatch, {})
 
 	return (
-		<MetaContext.Provider 
-			value={[state, dispatch]}
-		>
-			{props.children}
-		</MetaContext.Provider>
+		<MetaDispatchContext.Provider value={dispatch}>
+			<MetaDataContext.Provider value={state}>
+				{props.children}
+			</MetaDataContext.Provider>
+		</MetaDispatchContext.Provider>
 	)
 }

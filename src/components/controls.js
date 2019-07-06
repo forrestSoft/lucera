@@ -1,6 +1,8 @@
 import React, {useCallback, Fragment, Memo} from 'react';
-import useMetaContext from './contexts/meta'
-import useGridContext from './contexts/grid'
+import {useMetaDataContext} from './contexts/meta'
+import {useGridDispatchContext} from './contexts/grid'
+
+// import useGridContext from './contexts/grid'
 
 import Select from 'antd/es/select'
 import Form, {FormItem} from 'antd/es/form'
@@ -23,7 +25,7 @@ import "antd/es/input-number/style/css"
 const { Option } = Select
 
 const Options = ()=>{
-	const [meta, metaDispatch] = useMetaContext()
+	const meta = useMetaDataContext()
 	
   return (	
 		meta.symbolList &&
@@ -34,7 +36,7 @@ const Options = ()=>{
 }
 
 const Controls = props => {
-	const [grid, gridDispatch] = useGridContext()
+	const gridDispatch = useGridDispatchContext()
   return (
   	<Fragment>
   		<h3>Data filters</h3>

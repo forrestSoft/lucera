@@ -1,10 +1,10 @@
 import React, {useReducer, createContext, useContext} from 'react'
 import useMetaContext from './meta'
 
-const GridContext = createContext()
+const GridDataContext = createContext()
+const GridDispatchContext = createContext()
 
 const initialState =() =>{
-
 	return{
 		loading: true,
 		symbolList: [],
@@ -21,7 +21,6 @@ const initialState =() =>{
 const useGridDispatch = (state, action) => {
 	switch(action.action){
 		case 'DATA_LOADED': 
-		// debugger
 			return {...state, ...action.payload, loading:false}
 		break;
 		// case 'SORT':
@@ -75,17 +74,25 @@ const useGridDispatch = (state, action) => {
 }
 
 export default () => {
-  return useContext(GridContext)
+  return [useContext(GridDataContext), useContext(GridDispatchContext)]
+}
+
+export const useGridDataContext = ()=>{
+	return useContext(GridDataContext)
+}
+
+export const useGridDispatchContext = ()=>{
+	return useContext(GridDispatchContext)
 }
 
 export const GridProvider = props => {
 	const [state, dispatch] = useReducer(useGridDispatch, initialState())
 
 	return (
-		<GridContext.Provider 
-			value={[state, dispatch]}
-		>
+		<GridDispatchContext.Provider value={dispatch}>
+			<GridDataContext.Provider value={state}>
 			{props.children}
-		</GridContext.Provider>
+			</GridDataContext.Provider>
+		</GridDispatchContext.Provider>
 	)
 }
