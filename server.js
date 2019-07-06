@@ -28,11 +28,11 @@ const valid = [
 	'bid_quantity',
 	'ask_price',
 	'ask_quantity',
-	'symbols'
+	'symbols',
+	'page'
 ]
 
 app.get('/meta', (req, res)=>{
-	console.log(symbols,keys)
 	res.send({
 		symbolList: symbols,
 		headerKeys: keys
@@ -54,20 +54,36 @@ app.get('/query', (req, res) => {
 	}
 	
 	if(!Object.keys(actual).length){
+		debugger
 		res.send({
 			headerKeys: keys,
 			symbolList: symbols,
+			pagination: {
+					current: page || 1	
+				}
 		})	
 		return
 	}
 
-	let count = req.query.count || 10
-	let start = req.query.start || 0
+	let pageSize = req.query.pageSize || 10
+	let page = req.query.current || 1
+	let start = (page || 1)*pageSize-pageSize
+	actual.sym = !actual.sym[0].length ?  symbols : actual.sym
 	
 	db.find({
 		$where: function (){
 			let matches = Object.keys(actual).some((param, i)=>{
-				return actual[param].includes(this[param])
+				switch(param){
+					case 'sym':
+						return actual[param].includes(this[param])
+					break;
+					case 'ask_price':
+					case 'bid_price':
+					console.log(actual[param] < this[param])
+						return actual[param] < this[param]
+					default:
+						return true
+				}
 			})
 			
 			return matches
@@ -75,10 +91,13 @@ app.get('/query', (req, res) => {
 		(err, docs)=>{
 			res.send({
 				total: docs.length,
-				length: count,
-				data: docs,//.slice(start,count),
+				data: docs.slice(start,start+pageSize),
 				headerKeys: keys,
 				symbolList: symbols,
+				pagination: {
+					current: page++,
+					pageSize
+				}
 			})
 		})
 });

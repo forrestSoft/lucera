@@ -2,17 +2,13 @@ import React, {Fragment} from 'react'
 import Logo from 'logo-1.svg'
 import Layout from 'antd/es/layout'
 import Menu from 'antd/es/menu'
-
-
-
 import "antd/es/layout/style/css"
 import "antd/es/menu/style/css"
 
-
 import Controls from 'controls'
 import DataGrid from 'dataGrid'
-const { Header, Footer, Sider, Content } = Layout;
 
+const { Header, Footer, Sider, Content } = Layout;
 
 const Grid = props => {
   return(
@@ -29,13 +25,9 @@ const Grid = props => {
 		      	<img src={Logo} className="invert" />
 						<Controls />
 	      </Sider>
-
-      <Layout>
-	      
-	      <Content>
+      
 	      	<DataGrid />
-	      </Content>
-	    </Layout>
+	      
 	  </Layout>
   )
 }

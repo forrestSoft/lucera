@@ -6,24 +6,21 @@ import Select from 'antd/es/select'
 import Form, {FormItem} from 'antd/es/form'
 
 import Button from 'antd/es/button'
-import Dropdown from 'antd/es/dropdown'
 import Menu from 'antd/es/menu'
 import Icon from 'antd/es/icon'
 import Divider from 'antd/es/divider'
-import Collapse from 'antd/es/collapse'
+import InputNumber from 'antd/es/input-number'
 
 import "antd/es/select/style/css"
 import "antd/es/form/style/css"
 import "antd/es/button/style/css"
-import "antd/es/dropdown/style/css"
 import "antd/es/menu/style/css"
 import "antd/es/icon/style/css"
 import "antd/es/divider/style/css"
+import "antd/es/input-number/style/css"
 
-import "antd/es/collapse/style/css"
 
 const { Option } = Select
-const { Panel } = Collapse
 
 const Options = ()=>{
 	const [meta, metaDispatch] = useMetaContext()
@@ -38,70 +35,68 @@ const Options = ()=>{
 
 const Controls = props => {
 	const [grid, gridDispatch] = useGridContext()
-
   return (
   	<Fragment>
   		<h3>Data filters</h3>
   		<Divider />
-  		<Collapse >
-		    <Panel header="Select a symbol" key="1">
-		      <Form >
-			      <Select
-					    mode="multiple"
-					    style={{ width: '100%' }}
-					    placeholder="Please select"
-					    onChange={(vals)=>{
-					    	gridDispatch({
-									action: 'SYMBOL_OPTION_CHANGE',
-									payload: vals
-								})
-					    }}
-
-					    
-					  >
-					    {Options() }
-					  </Select>,
-				    
-			    </Form>
-		    </Panel>
-		    <Panel header="other">
-		    	
-		    </Panel>
-		    
-		  </Collapse>,
-	    
+	    <Form >
+	      <Form.Item label="Symbol">
+		      <Select
+				    mode="multiple"
+				    style={{ width: '100%' }}
+				    placeholder="Please select"
+				    onChange={(vals)=>{
+				    	gridDispatch({
+								action: 'SYMBOL_OPTION_CHANGE',
+								payload: vals
+							})
+				    }}
+				  >
+				    {Options()}
+				  </Select>
+				</Form.Item>
+			  <Form.Item label="LP">
+				  <InputNumber 
+				  	min={1} 
+				  	max={10} 
+				  	defaultValue={3} 
+				  	onChange={(vals)=>{
+				    	gridDispatch({
+								action: 'SYMBOL_OPTION_CHANGE',
+								payload: vals
+							})
+				    }}
+			    />
+		    </Form.Item>
+		    <Form.Item label="Bid Price">
+				  <InputNumber 
+				  	min={1} 
+				  	max={10} 
+				  	defaultValue={3} 
+				  	onChange={(vals)=>{
+				    	gridDispatch({
+								action: 'BID_PRICE_CHANGE',
+								payload: vals
+							})
+				    }}
+			    />
+		    </Form.Item>
+		    <Form.Item label="Ask Price">
+				  <InputNumber 
+				  	min={1} 
+				  	max={10} 
+				  	defaultValue={3} 
+				  	onChange={(vals)=>{
+				    	gridDispatch({
+								action: 'ASK_PRICE_CHANGE',
+								payload: vals
+							})
+				    }}
+			    />
+		    </Form.Item>
+	    </Form>
     </Fragment>
   )
 }
 
 export default Controls
-
-const SymbolSelect = props => {
-	const [meta, metaDispatch] = useMetaContext()
-
-	const handleChange = useCallback((e)=>{
-		metaDispatch({
-	    action: 'SYMBOL_CHANGED',
-	    payload: e.target.value
-	  })
-	}, [meta.selectedSymbol, metaDispatch])
-
-	return (
-		<Form.Item >
-			<Select 
-	    	onChange={handleChange}
-	    	value={meta.selectedSymbol || ''}
-	    >
-	    	{
-		    	meta.symbolList && meta.symbolList.map((symbol, i)=>{
-		    		return(
-		    			<Option value={symbol} key={symbol}>
-	    					{symbol}
-	  					</Option>
-						)
-		    	})
-	    	}
-	    </Select>
-    </Form.Item>
-    )
-  }

@@ -6,10 +6,14 @@ const GridContext = createContext()
 const initialState =() =>{
 
 	return{
-		loadng: true,
+		loading: true,
 		symbolList: [],
 		filter:{
 			sym: []
+		},
+		pagination: {
+			current: 1,
+			total: 0
 		}
 	}
 }
@@ -35,6 +39,27 @@ const useGridDispatch = (state, action) => {
 					sym:mappedOptions
 				}
 			}
+		break;
+		case 'ASK_PRICE_CHANGE':
+			return {
+				...state,
+				filter: {
+					...state.filter, 
+					ask_price:action.payload
+				}
+			}
+		break;
+		case 'PAGINATION_CLICK':
+			return {
+					...state,
+					pagination: {...state.pagination, ...action.payload}
+				}
+		case 'PAGINATION_SIZE_CHANGE':
+			debugger
+			return {
+					...state,
+					pagination: {...state.pagination, ...action.payload}
+				}
 		default:
 			return state
 	}

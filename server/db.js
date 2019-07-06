@@ -17,9 +17,10 @@ fill = (data) => {
 		// walk over every row to build array of unique
 		// symbols
 		let s = newDocs.forEach((doc,i)=>{
-			// if(!symbols[doc.sym]){
-			// 	symbols[doc.sym] = true
-			// }
+			// db.update({ _id: doc._id }, { $set: { ts: new Date(doc.ts).getMonth() } }, 
+			// 	{ multi: true },
+			// 	function (err, numReplaced) {})
+
 			symbols.add(doc.sym)
 		})
 

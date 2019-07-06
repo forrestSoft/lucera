@@ -1,14 +1,22 @@
 import React, {useContext, useEffect, Fragment, memo} from 'react';
 import useGridContext from './contexts/grid'
 import useMetaContext from './contexts/meta'
-
-import Table from 'antd/es/table';
+import Layout from 'antd/es/layout'
+import Table from 'antd/es/table'
+import Pagination from 'antd/es/pagination';
+import "antd/es/layout/style/css"
 import "antd/es/table/style/css"
+import "antd/es/pagination/style/css"
 import * as V from 'victory'
 
 import Bar from 'charts/bar'
 import Line from 'charts/line'
 
+const { Header, Footer, Sider, Content } = Layout
+
+const toTitleCase = (s)=>{
+	    return s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 const DataGrid = props => {
 	const [grid, gridsDispatch] = useGridContext()
 	const [meta, metaDispatch] = useMetaContext()
@@ -19,6 +27,7 @@ const DataGrid = props => {
 			payload: e.target.textContent
 		})
 	}
+
 	const columns = ()=>{
     if(!meta.headerKeys){
       return []
@@ -26,23 +35,59 @@ const DataGrid = props => {
    
     return meta.headerKeys.map((header, i)=>{
       return {
-        title: header,
+        title: toTitleCase(header.replace('_', ' ')),
         dataIndex: header,
         key: header,
       }
     })
   }
 
+	const handleTableChange=(pagination, filters, sorter)=>{
+		gridsDispatch({
+			action: 'PAGINATION_CLICK',
+			payload: {current: pagination.current}
+		})
+	}
+
+	function handleShowSizeChange(current, pageSize) {
+		debugger
+	  gridsDispatch({
+			action: 'PAGINATION_SIZE_CHANGE',
+			payload: {current: current, pageSize: pageSize}
+		})
+	}
 	return (
-		<Fragment>
+		
+		<Layout>
+		<Content style={{height: '66vh', overflow: 'scroll'}}>
   		<Table 
   			dataSource={grid.data}
   			columns={columns()} 
   			rowKey={record => record._id}
-        style={{minHeight: '100vh'}}
+        pagination={{
+        	...grid.pagination,
+        	total: grid.total,
+        	showSizeChanger: true,
+        	pageSizeOptions: [
+						'10',
+						'25',
+						'100',
+						'1000'
+        	],
+        	onShowSizeChange:(current, page)=>{
+        		handleShowSizeChange(current, page)
+        	}
+        }}
+        onChange = {handleTableChange}
+        scroll={{ y: 240 }}
   		/>
-			
-		</Fragment>
+  		</Content>
+  		<Content className={'flex'}>
+			<Line />
+			<Bar />
+			</Content>
+			</Layout>
+		
 	)
 }
 

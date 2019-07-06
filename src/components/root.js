@@ -8,7 +8,7 @@ import Grid from 'grid'
 import Spin from 'antd/es/spin'
 import "antd/es/spin/style/css"
 
-const outGoingURL = 'http://localhost:3000/query'
+const outGoingURL = 'http://localhost:3000/query/?'
 const Root = (props) => {
 	const [grid, gridDispatch] = useGridContext()
 	const [meta, metaDispatch] = useMetaContext()
@@ -23,20 +23,27 @@ const Root = (props) => {
   const [metaData, metaLoading, metaError] = useFetch(metaURL, metaLoaded)
 
   const buildURL = ()=>{
-      console.log(grid.filters, !grid.filters)
     if(!grid.filter){
       return outGoingURL
     }
 
-      
     let filters = ''
-    Object.keys(grid.filter).map((filter, i)=>{
-      
-      filters += `${filter}=${grid.filter[filter].join(',')}`
+    console.log({...grid.filter, ...grid.pagination})
+    Object.keys({...grid.filter, ...grid.pagination}).map((filter, i)=>{
+      switch(typeof filter){
+        case 'string':
+        case 'number':
+        console.log(`${filter}=${grid.filter[filter]||grid.pagination[filter]}&`)
+          filters += `${filter}=${grid.filter[filter]||grid.pagination[filter]}&`
+        break;
+        case 'array':
+          filters += `${filter}=${grid.filter[filter].join(',')}&`
+        break;
+      }
     })
     
-    return `${outGoingURL}?${filters}`
-    
+    return `${outGoingURL}${filters}`
+
   }
   const gridURL = buildURL()
   const gridLoaded = useCallback((payload)=>{
