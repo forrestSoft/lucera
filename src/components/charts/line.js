@@ -4,12 +4,10 @@ import * as V from 'victory'
 
 const Line = ()=>{
   const [grid, gridsDispatch] = useGridContext()
-  // debugger
+
   return(
-    <Fragment>
-      <V.VictoryChart 
-        theme={V.VictoryTheme.material}
-      >
+    <div>
+      <V.VictoryChart height={250} width={400}>
         <V.VictoryLine 
           data={grid.data}
           x="ts"
@@ -54,7 +52,7 @@ const Line = ()=>{
           }}
         />
       </V.VictoryChart>
-    </Fragment>
+    </div>
   )
 }
 

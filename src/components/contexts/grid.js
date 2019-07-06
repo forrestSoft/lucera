@@ -24,7 +24,6 @@ const useGridDispatch = (state, action) => {
 		// 	return {...state, data: sort(state.data, action.payload)}
 		// break;
 		case 'SYMBOL_OPTION_CHANGE':
-		console.log(3)
 			const mappedOptions = state.symbolList.filter((symbol, i)=>{
 				return (action.payload.includes(i))
 			})

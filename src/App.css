@@ -34,3 +34,15 @@
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.ant-col.ant-form-item-label label{
+  color: #ccc;
+}
+
+.flex{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 33vh;
+}
