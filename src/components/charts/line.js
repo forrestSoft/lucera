@@ -1,9 +1,9 @@
-import React, {useContext, Fragment, memo} from 'react';
-import useGridContext from '../contexts/grid'
+import React from 'react'
+import {useGridDataContext} from '../contexts/grid'
 import * as V from 'victory'
 
 const Line = ()=>{
-  const [grid, gridsDispatch] = useGridContext()
+  const grid = useGridDataContext()
 
   return(
     <div>
@@ -46,7 +46,6 @@ const Line = ()=>{
           }}
         />
         <V.VictoryAxis
-          tickCount={10}
           dependentAxis
           label=""
           tickCount={3}

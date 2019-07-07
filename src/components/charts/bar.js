@@ -1,10 +1,10 @@
 
-import React, {useContext} from 'react';
-import useGridContext from '../contexts/grid'
+import React from 'react';
+import {useGridDataContext} from '../contexts/grid'
 import * as V from 'victory'
 
 const Bar = props => {
-	const [grid, gridsDispatch] = useGridContext()
+	const grid = useGridDataContext()
 	return(
 		<div>
 			<V.VictoryChart 

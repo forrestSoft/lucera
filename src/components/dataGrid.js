@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, Fragment, memo} from 'react';
+import React from 'react';
 import useGridContext from './contexts/grid'
 import useMetaContext, {useMetaDataContext} from './contexts/meta'
 import Layout from 'antd/es/layout'
@@ -57,7 +57,6 @@ const DataGrid = props => {
 	}
 
 	function handleShowSizeChange(current, pageSize) {
-		debugger
 	  gridsDispatch({
 			action: 'PAGINATION_SIZE_CHANGE',
 			payload: {current: current, pageSize: pageSize}

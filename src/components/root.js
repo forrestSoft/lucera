@@ -1,7 +1,7 @@
-import React, {Fragment, useEffect, useCallback} from 'react'
+import React, {Fragment, useCallback} from 'react'
 
 import useGridContext, {useGridDataContext} from './contexts/grid'
-import useMetaContext, {useMetaDispatchContext} from './contexts/meta'
+import {useMetaDispatchContext} from './contexts/meta'
 import useFetch from 'hooks/useFetch'
 import Grid from 'grid'
 

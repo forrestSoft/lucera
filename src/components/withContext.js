@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {GridContext, GridProvider} from './contexts/grid'
-import {MetaContext, MetaProvider} from './contexts/meta'
+import {GridProvider} from './contexts/grid'
+import {MetaProvider} from './contexts/meta'
 
 const WithContext = (props) => {
 	return(

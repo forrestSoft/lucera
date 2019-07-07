@@ -1,5 +1,4 @@
 import React, {useReducer, createContext, useContext} from 'react'
-import useMetaContext from './meta'
 
 const GridDataContext = createContext()
 const GridDispatchContext = createContext()
@@ -67,7 +66,6 @@ const useGridDispatch = (state, action) => {
 					pagination: {...state.pagination, ...action.payload}
 				}
 		case 'PAGINATION_SIZE_CHANGE':
-			debugger
 			return {
 					...state,
 					pagination: {...state.pagination, ...action.payload}
