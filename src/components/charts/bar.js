@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import useGridContext from '../contexts/grid'
 import * as V from 'victory'
 
-const Bar = () => {
+const Bar = props => {
 	const [grid, gridsDispatch] = useGridContext()
 	return(
 		<div>
@@ -13,13 +13,14 @@ const Bar = () => {
 				domainPadding={{ x: [100,10] }}
 			>
 		    <V.VictoryLabel 
-          text={"Ask Price over Bid Price"}
+          text={props.title}
           dy={30}
-          dx={125}/>
+          dx={125}
+        />
 		    <V.VictoryBar 
 		    	data={grid.data}
-		    	x="bid_quantity"
-		      y="bid_price"
+		    	x={props.x}
+		      y={props.y}
 		      barWidth={25}
 		    />
 		    <V.VictoryAxis

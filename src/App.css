@@ -44,7 +44,11 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 33vh;
+  /*height: 33vh;*/
   background:white;
   padding-top:30px;
+}
+.flex > div{
+    flex-grow: 1;
+  
 }

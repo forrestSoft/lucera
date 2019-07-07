@@ -7,7 +7,7 @@ const Line = ()=>{
 
   return(
     <div>
-      <V.VictoryChart height={250} width={400}>
+      <V.VictoryChart >
         <V.VictoryLabel 
           text={"Ask and Bid Price over time"}
           dy={30}
@@ -49,9 +49,10 @@ const Line = ()=>{
           tickCount={10}
           dependentAxis
           label=""
+          tickCount={3}
           style={{
             tickLabels: {
-              fontSize: "5px"
+              fontSize: "15px"
             }
           }}
         />

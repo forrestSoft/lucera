@@ -65,7 +65,7 @@ app.get('/query', (req, res) => {
 		return
 	}
 
-	let pageSize = parseInt(req.query.pageSize || 10)
+	let pageSize = parseInt(req.query.pageSize || 15)
 	let page = req.query.current || 1
 	let start = (page || 1)*pageSize-pageSize
 	actual.sym = !actual.sym[0].length ?  symbols : actual.sym

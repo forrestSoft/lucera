@@ -86,14 +86,15 @@ const DataGrid = props => {
 	        	}
 	        }}
 	        size="small"
-	        scroll={{ y: '44vh' }}
+	        scroll={{ y: '52vh' }}
 	        onChange = {handleTableChange}
 	        
 	  		/>
   		</Content>
   		<Content className={'flex'}>
 				<Line />
-				<Bar />
+				<Bar x={"ts"} y={"bid_price"} title={'Time over Bid Price'}/>
+				<Bar x={"lp"} y={"bid_price"} title={'LP over Bid Price'}/>
 			</Content>
 		</Layout>
 	)
