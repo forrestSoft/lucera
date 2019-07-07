@@ -24,12 +24,23 @@ import "antd/es/input-number/style/css"
 
 const { Option } = Select
 
-const Options = ()=>{
+const SymbolOptions = ()=>{
 	const meta = useMetaDataContext()
 	
   return (	
 		meta.symbolList &&
 	  	meta.symbolList.map((symbol, i)=>{
+	  		return(<Option value={i} key={i}>{symbol}</Option>)
+			})
+  )
+}
+
+const LPOptions = ()=>{
+	const meta = useMetaDataContext()
+	
+  return (	
+		meta.lpList &&
+	  	meta.lpList.map((symbol, i)=>{
 	  		return(<Option value={i} key={i}>{symbol}</Option>)
 			})
   )
@@ -54,48 +65,24 @@ const Controls = props => {
 							})
 				    }}
 				  >
-				    {Options()}
+				    {SymbolOptions()}
 				  </Select>
 				</Form.Item>
-			  <Form.Item label="LP">
-				  <InputNumber 
-				  	min={1} 
-				  	max={10} 
-				  	defaultValue={3} 
-				  	onChange={(vals)=>{
+				<Form.Item label="Symbol">
+		      <Select
+				    mode="multiple"
+				    style={{ width: '100%' }}
+				    placeholder="Please select"
+				    onChange={(vals)=>{
 				    	gridDispatch({
 								action: 'LP_OPTION_CHANGE',
 								payload: vals
 							})
 				    }}
-			    />
-		    </Form.Item>
-		    {/*<Form.Item label="Bid Price">
-				  <InputNumber 
-				  	min={1} 
-				  	max={10} 
-				  	defaultValue={3} 
-				  	onChange={(vals)=>{
-				    	gridDispatch({
-								action: 'BID_PRICE_CHANGE',
-								payload: vals
-							})
-				    }}
-			    />
-		    </Form.Item>
-		    <Form.Item label="Ask Price">
-				  <InputNumber 
-				  	min={1} 
-				  	max={10} 
-				  	defaultValue={3} 
-				  	onChange={(vals)=>{
-				    	gridDispatch({
-								action: 'ASK_PRICE_CHANGE',
-								payload: vals
-							})
-				    }}
-			    />
-		    </Form.Item>*/}
+				  >
+				    {LPOptions()}
+				  </Select>
+				</Form.Item>
 	    </Form>
     </Fragment>
   )

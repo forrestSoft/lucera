@@ -10,9 +10,10 @@ csvToJson()
 	.fromFile(csvFilePath)
 	.subscribe((jsonObj,index)=>{
 		// 2018-12-06T 13:00:00.119Z
-    // jsonObj.ts = /\d{2}:\d{2}:\d{2}\.\d{3}/.exec(jsonObj.ts)[0]
-		console.log(index, jsonObj)
+    console.log(index,jsonObj.ts = /\d{2}:\d{2}:\d{2}\.\d{3}/.exec(jsonObj.ts)[0])
+		// console.log(index, jsonObj)
     symbols.add(jsonObj.sym)
+    lps.add(jsonObj.lp)
 	})
 	.then((jsonObj)=>{
 	    fill(jsonObj)
@@ -23,7 +24,8 @@ fill = (data) => {
 		// send along column headers and unique symbols
 		begin({
 			headerKeys: Object.keys(newDocs[0]),
-			symbolList: Array.from(symbols)
+			symbolList: Array.from(symbols),
+			lpList: Array.from(lps)
 		})
 	})
 }

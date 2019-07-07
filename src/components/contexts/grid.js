@@ -28,6 +28,7 @@ const useGridDispatch = (state, action) => {
 		// break;
 		case 'SYMBOL_OPTION_CHANGE':
 			const mappedOptions = state.symbolList.filter((symbol, i)=>{
+				console.log(symbol)
 				return (action.payload.includes(i))
 			})
 
@@ -39,12 +40,15 @@ const useGridDispatch = (state, action) => {
 				}
 			}
 		break;
-		case 'LP_PRICE_CHANGE':
+		case 'LP_OPTION_CHANGE':
+			const mappedLPs = state.lpList.filter((lp, i)=>{
+					return (action.payload.includes(i))
+			})
 			return {
 				...state,
 				filter: {
 					...state.filter, 
-					lp:action.payload
+					lp:mappedLPs
 				}
 			}
 		break;

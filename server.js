@@ -9,9 +9,11 @@ const db = require('./server/db.js')
 
 let keys
 let symbols
+let lps
 begin = (data) => {
 	keys = data.headerKeys
 	symbols = data.symbolList
+	lps = data.lpList
 	
 	app.listen(port, () => console.log(`Listening on port ${port}`));
 }
@@ -35,7 +37,8 @@ const valid = [
 app.get('/meta', (req, res)=>{
 	res.send({
 		symbolList: symbols,
-		headerKeys: keys
+		headerKeys: keys,
+		lpList: lps
 	})
 })
 
@@ -75,6 +78,7 @@ app.get('/query', (req, res) => {
 			let matches = Object.keys(actual).some((param, i)=>{
 				switch(param){
 					case 'sym':
+					case 'lp':
 						return actual[param].includes(this[param])
 					break;
 					case 'ask_price':
@@ -94,6 +98,7 @@ app.get('/query', (req, res) => {
 				data: docs.slice(start,start+pageSize),
 				headerKeys: keys,
 				symbolList: symbols,
+				lpList: lps,
 				pagination: {
 					current: page++,
 					pageSize
