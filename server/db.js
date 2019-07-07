@@ -1,4 +1,4 @@
-const csvFilePath = "./bdata.csv"
+const csvFilePath = "./adata.csv"
 const csvToJson=require('csvtojson')
 const Datastore = require('nedb')
 
